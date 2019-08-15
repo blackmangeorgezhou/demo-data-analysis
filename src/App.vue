@@ -6,8 +6,10 @@
       <circle-compare-panel v-for="(item, index) in demoProjectList"
       :key="index"
       @clickPanel="goChildern(item.path)"
+      :type="'icon'"
       :bgColor="item.bgColor"
-      :title="item.title"></circle-compare-panel>
+      :title="item.title"
+      :panelIcon="item.icon"></circle-compare-panel>
     </div>
     <router-view/>
   </div>
@@ -67,11 +69,13 @@ export default {
         {
           path: '/demo-data-analysis/campus-classroom',
           title: '生源率及教室产能分析',
-          bgColor: '#098d91'
+          bgColor: '#098d91',
+          icon: 'el-icon-pie-chart'
         },
         {
           path: '/demo-data-analysis/department-target',
-          title: '部门指标汇总分析'
+          title: '部门指标汇总分析',
+          icon: 'el-icon-data-analysis'
         }
       ]
     }
@@ -116,5 +120,6 @@ export default {
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 </style>

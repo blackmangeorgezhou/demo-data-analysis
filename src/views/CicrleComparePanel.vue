@@ -1,12 +1,12 @@
 <template>
   <div :id="elementId" class="circle-compare-panel" :style="panelStyle" @click="clickComparePanel">
     <el-card :body-style="{ padding: '0px' }" shadow="hover">
-      <!-- <p :class="position === 'center' ? 'text-align-c' : 'text-align-l'">{{title}}</p> -->
       <div slot="header">
         <span>{{title}}</span>
       </div>
       <p class="text-align-c">
         <span class="percentage-value-text" v-if="type === 'text'">{{percentage + '%'}}</span>
+        <i class="percentage-value-text" :class="panelIcon" v-else-if="type === 'icon'"></i>
         <el-progress v-else type="circle" :stroke-width="height * 0.1" :width="height" :percentage="percentage" :color="circleColors"></el-progress>
       </p>
       <p v-if="target" :class="position === 'center' ? 'text-align-c' : 'text-align-l'" :style="'font-size:' + 0.1 * height +'px'">{{target}}</p>
@@ -22,11 +22,11 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'text' // text; progress
+      default: 'text' // text; progress; icon
     },
     height: {
       type: Number,
-      default: 150
+      default: 130
     },
     bgColor: {
       type: String,
@@ -47,6 +47,10 @@ export default {
     position: {
       type: String,
       default: 'center'
+    },
+    panelIcon: {
+      type: String,
+      default: 'el-icon-data-analysis'
     }
   },
 
@@ -70,8 +74,13 @@ export default {
     }
 
     if (percentageTextValueEle) {
-      percentageTextValueEle.style.fontSize = `${this.height * 0.35}px`
-      percentageTextValueEle.style.lineHeight = `${this.height * 0.8}px`
+      if (this.type === 'icon') {
+        percentageTextValueEle.style.fontSize = `${this.height * 0.5}px`
+        percentageTextValueEle.style.color = this.bgColor
+      } else {
+        percentageTextValueEle.style.fontSize = `${this.height * 0.35}px`
+        percentageTextValueEle.style.lineHeight = `${this.height * 0.8}px`
+      }
     }
   },
 

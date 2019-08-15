@@ -1,6 +1,6 @@
 <template>
   <div class="classroom-capcity">
-     <p class="display-between" style="width: 50%">
+     <p class="display-between" style="padding-right: 30%">
       <span>
         <p>
           <el-tag>上一季度：</el-tag>

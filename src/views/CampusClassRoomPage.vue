@@ -1,7 +1,10 @@
 <template>
   <div id="index-page">
-    <nav-bar :canSelectTitle="false" :regionOptions="titleList"></nav-bar>
-    <div class="central-content">
+    <nav-bar @transferElementId="getNavBarId"
+    :canSelectTitle="false"
+    :regionOptions="titleList"
+    :rightType="'back'"></nav-bar>
+    <div :id="elementId" class="central-content">
       <el-tabs>
         <el-tab-pane>
           <span slot="label">
@@ -56,6 +59,7 @@ import AdmissionInstruction from './AdmissionInstruction'
 import RateForContinueClass from './RateForContinueClass'
 import OrganizationTree from '@/components/OrganizationTree'
 
+import { Formate } from '@/utils'
 export default {
   name: 'IndexPage',
 
@@ -76,7 +80,29 @@ export default {
           label: '生源率及教室产能分析',
           value: '生源率及教室产能分析'
         }
-      ]
+      ],
+      navBarId: ''
+    }
+  },
+
+  computed: {
+    elementId () {
+      return `campus-class-room-${Formate.generateUUID()}`
+    }
+  },
+
+  mounted () {
+    const wH = window.innerHeight
+    let navBarEle = document.getElementById(this.navBarId)
+    const navHeight = navBarEle.clientHeight
+    let centerContentEle = document.getElementById(this.elementId)
+    centerContentEle.style.height = `${wH - navHeight}px`
+    centerContentEle.style.overflow = 'auto'
+  },
+
+  methods: {
+    getNavBarId (id) {
+      this.navBarId = id
     }
   }
 }
@@ -84,10 +110,7 @@ export default {
 
 <style>
 #index-page .central-content {
-  padding-top: 1%;
-  width: 95%;
-  margin: 0 auto;
-  overflow: auto;
+  padding: 1rem 0 0 1rem;
 }
 
 #index-page .central-content .el-tabs__item {

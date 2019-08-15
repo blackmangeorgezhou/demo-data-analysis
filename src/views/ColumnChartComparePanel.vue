@@ -1,5 +1,6 @@
 <template>
-  <div :id="elementId" class="column-chart-compare-panel" :style="{width: width +'px', height: width + 'px', margin: '2rem auto'}">
+  <div :id="elementId" class="column-chart-compare-panel"
+  :style="{width: width +'px', height: height + 'px', margin: '0rem auto', padding: '0'}">
 
   </div>
 </template>
@@ -11,14 +12,14 @@ export default {
   name: 'ColumnChartComparePanel',
 
   props: {
-    height: {
+    width: {
       type: Number,
       default: 350
     },
 
-    width: {
+    height: {
       type: Number,
-      default: 250
+      default: 350
     },
 
     xAxisDirection: {
@@ -83,6 +84,13 @@ export default {
       default: () => {
         return ['泡泡', '中学']
       }
+    },
+
+    columnColors: {
+      type: Array,
+      default: () => {
+        return ['#67c23a', '#409EFF']
+      }
     }
   },
 
@@ -140,6 +148,7 @@ export default {
           bottom: '3%',
           containLabel: true
         },
+        color: this.columnColors,
         xAxis: this.xAxisDirection === 'vertical' ? this.xAxisObj[0] : this.xAxisObj[1],
         yAxis: this.xAxisDirection === 'vertical' ? this.xAxisObj[1] : this.xAxisObj[0],
         series: this.generateSeriesData()
@@ -156,13 +165,15 @@ export default {
       for (let item of this.seriesDataList) {
         newList.push({
           name: item.name,
+          barMaxWidth: 45,
+          barGap: 0,
           type: 'bar',
           data: item.data,
           itemStyle: {
             normal: {
               label: {
                 show: true,
-                position: 'top',
+                position: this.xAxisDirection === 'horizontal' ? 'top' : 'right',
                 textStyle: {
                   fontSize: 16
                 },

@@ -19,7 +19,7 @@
           <el-dropdown @command="dropdownClick">
             <span class="el-dropdown-link" style="color: #fff">
               <i class="fa fa-user-o"></i>
-              <span>{{user ? user.userName : '苏小新'}}</span>
+              <span>{{user ? user.userName || '苏小新' : '苏小新'}}</span>
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="/user-detail">个人信息</el-dropdown-item>
@@ -28,12 +28,16 @@
           </el-dropdown>
         </li>
         <li @click="viewHelpDetail()" title="帮助">
-          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          <i class="fa fa-question-circle color-f" aria-hidden="true"></i>
           <span>帮助</span>
         </li>
-        <li @click="logout()" title="退出">
-            <i class="fa fa-sign-in" aria-hidden="true"></i>
+        <li v-if="rightType === 'exit'" @click="logout()" title="退出">
+            <i class="fa fa-sign-in color-f" aria-hidden="true"></i>
             <span>退出</span>
+        </li>
+        <li v-else-if="rightType === 'back'" @click="goBack()" title="返回">
+            <i class="fa fa-reply color-f" aria-hidden="true"></i>
+            <span>返回</span>
         </li>
       </ul>
     </div>
@@ -72,6 +76,11 @@ export default {
     bgColor: {
       type: String,
       default: '#098d91'
+    },
+
+    rightType: {
+      type: String,
+      default: 'exit'
     }
   },
   data () {
@@ -90,6 +99,7 @@ export default {
   },
 
   created () {
+    this.$emit('transferElementId', this.elementId)
     if (this.regionOptions[0].label) {
       this.selectedRegion = this.regionOptions[0].label
       // this.setCurrentRegion(this.selectedRegion)
@@ -122,6 +132,9 @@ export default {
     // option change.
     optionChange (option) {
       this.setCurrentRegion(option)
+    },
+    goBack () {
+      this.$router.go(-1)
     }
   },
   computed: {

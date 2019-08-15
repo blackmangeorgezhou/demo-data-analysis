@@ -186,6 +186,10 @@ li {
   padding: 1.25rem
 }
 
+.padding-b-48 {
+  padding-bottom: 3rem
+}
+
 /* border-radius */
 .border-radius-8 {
   border-radius: .5rem
