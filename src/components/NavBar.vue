@@ -117,7 +117,7 @@ export default {
     },
 
     logout () {
-      this.showWarning(Constants.waitingToShow)
+      this.$router.push('/')
     },
     dropdownClick (command) {
       this.showWarning(Constants.waitingToShow)

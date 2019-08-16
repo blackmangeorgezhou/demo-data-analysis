@@ -1,6 +1,6 @@
 let Constants = {
   noName: 'X X',
-  sysTitle: '苏州新东方学校信息统一门户',
+  sysTitle: '苏州新东方学校信息统计分析 - 测试',
   // log print
   printLinkString: '----------',
   defaultCopyRight: 'Copyright © 2016 - 2019 苏州新东方学校, All Rights Reserved',

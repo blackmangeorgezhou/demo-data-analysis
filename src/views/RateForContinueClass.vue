@@ -108,7 +108,7 @@ export default {
       let response = await API.getRateForContinueToHaveClasses(reqParams)
       console.log(response)
       if (response && response.resultCode === ResultCode.OK) {
-        this.treeData = this.convertToTreeData('续班率', response.data, this.treeLevelFields)
+        this.treeData = this.convertToTreeData('续报率', response.data, this.treeLevelFields)
       } else {
         alert(ResultMsg.ResultMsg)
       }

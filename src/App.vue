@@ -1,16 +1,6 @@
 <template>
   <div id="app">
     <the-loading v-if="isLoading"></the-loading>
-    <nav-bar v-if="isShowAppNavBar" :canSelectTitle="false" :regionOptions="titleList"></nav-bar>
-    <div v-if="isShowAppNavBar" class="display-flex-wrap">
-      <circle-compare-panel v-for="(item, index) in demoProjectList"
-      :key="index"
-      @clickPanel="goChildern(item.path)"
-      :type="'icon'"
-      :bgColor="item.bgColor"
-      :title="item.title"
-      :panelIcon="item.icon"></circle-compare-panel>
-    </div>
     <router-view/>
   </div>
 </template>

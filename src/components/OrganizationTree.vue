@@ -17,7 +17,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          label: '招生指示',
+          label: '招生数据',
           children: [
             {
               label: '产品研发部',

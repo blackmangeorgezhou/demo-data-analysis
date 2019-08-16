@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import LoginPage from '@/views/LoginPage'
+import HomePage from '@/views/HomePage'
 import CampusClassRoomPage from '@/views/CampusClassRoomPage'
 import DepartmentTargetAnalysisPage from '@/views/DepartmentTargetAnalysisPage'
 
@@ -9,11 +11,21 @@ import { storeLocalStorage } from '@/utils'
 Vue.use(Router)
 
 let router = new Router({
-  base: '/demo-data-analysis/home',
+  base: '/demo-data-analysis/',
   routes: [
     {
       path: '',
-      redirect: '/demo-data-analysis/home'
+      redirect: '/demo-data-analysis/login'
+    },
+    {
+      path: '/demo-data-analysis/login',
+      name: '数据分析模板登录',
+      component: LoginPage
+    },
+    {
+      path: '/demo-data-analysis/home',
+      name: '数据分析模板主页',
+      component: HomePage
     },
     {
       path: '/demo-data-analysis/campus-classroom',

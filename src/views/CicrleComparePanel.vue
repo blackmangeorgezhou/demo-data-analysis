@@ -15,6 +15,7 @@
 </template>
 <script>
 import { Formate } from '@/utils'
+import TestTagIcon from '@/assets/images/testTag.png'
 
 export default {
   name: 'CircleComparePanel',
@@ -51,6 +52,10 @@ export default {
     panelIcon: {
       type: String,
       default: 'el-icon-data-analysis'
+    },
+    tagIcon: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -68,6 +73,9 @@ export default {
     cardHeaderEle.style.lineHeight = `${this.height * 0.25}px`
     const headerH = cardHeaderEle.clientHeight
     cardBodyEle.style.height = `${cardH - headerH}px`
+    if (this.tagIcon) {
+      cardBodyEle.style.backgroundImage = `url(${TestTagIcon})`
+    }
 
     if (innerTextEle) {
       innerTextEle.style.fontSize = `${this.height * 0.25}px`
@@ -102,7 +110,8 @@ export default {
         {color: '#e6a23c', percentage: 60},
         {color: '#5cb87a', percentage: 80},
         {color: '#67c23a', percentage: 100}
-      ]
+      ],
+      TestTagIcon: TestTagIcon
     }
   },
 
@@ -130,6 +139,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  background-repeat: no-repeat;
+  background-position: bottom right;
 }
 
 .circle-compare-panel .el-card .el-card__header {

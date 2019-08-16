@@ -9,7 +9,7 @@
         <el-tab-pane>
           <span slot="label">
             <i class="el-icon-data-analysis"></i>
-            <span>招生指示</span>
+            <span>招生数据</span>
           </span>
           <admission-instruction></admission-instruction>
         </el-tab-pane>

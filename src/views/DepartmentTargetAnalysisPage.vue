@@ -22,14 +22,14 @@
       </div>
       <el-divider></el-divider>
       <div class="display-flex padding-b-48" style="width: 80%; margin: 0 auto">
-        <div class="display-flex-wrap" style="width: 55%">
+        <div class="display-flex-wrap" style="width: 50%">
           <circle-compare-panel v-for="item in textCompareList"
           :key="item.title"
           :title="item.title"
           :percentage="item.value"
           :target="item.target"></circle-compare-panel>
         </div>
-        <div style="width: 45%; border-left: 1px solid #ccc">
+        <div style="width: 50%; border-left: 1px solid #ccc">
           <column-chart-compare-panel
           :width="550"
           :height="800"
@@ -119,7 +119,7 @@ export default {
         {
           seriesDataList: [
             {
-              name: '续班率',
+              name: '续报率',
               data: [61, 63]
             },
 
@@ -169,6 +169,8 @@ export default {
     const navHeight = navBarEle.clientHeight
     let centerContentEle = document.getElementById(this.elementId)
     centerContentEle.style.height = `${wH - navHeight}px`
+    // centerContentEle.style.width = '1100px'
+    // centerContentEle.style.margin = '0 auto'
     centerContentEle.style.overflow = 'auto'
   },
 
@@ -185,3 +187,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.fixed-width {
+  width: 1100px;
+  margin: 0 atuo
+}
+</style>

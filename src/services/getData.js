@@ -6,6 +6,11 @@ const get = request.get
 const post = request.post
 
 let API = {
+  login: async (data) => {
+    const result = await post(URL.login, data)
+    return result
+  },
+
   getAdmissionInstructions: async (data) => {
     const result = await get(URL.getAdmissionInstructions, data)
     return result

@@ -70,7 +70,7 @@ export default {
       let response = await API.getAdmissionInstructions(reqParams)
       console.log(response)
       if (response && response.resultCode === ResultCode.OK) {
-        this.treeData = this.convertToTreeData('招生指示', response.data, this.treeLevelFields)
+        this.treeData = this.convertToTreeData('招生数据', response.data, this.treeLevelFields)
       } else {
         alert(ResultMsg.ResultMsg)
       }

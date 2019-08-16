@@ -9,6 +9,8 @@ import ElementUI from 'element-ui'
 import echarts from 'echarts'
 import Vue2OrgTree from 'vue2-org-tree'
 import { DialogAlert } from '@/common'
+// mock：登录
+import '@/mock'
 
 Vue.use(VueResource)
 Vue.use(Vue2OrgTree)
