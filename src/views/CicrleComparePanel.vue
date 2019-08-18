@@ -5,11 +5,14 @@
         <span>{{title}}</span>
       </div>
       <p class="text-align-c">
-        <span class="percentage-value-text" v-if="type === 'text'">{{percentage + '%'}}</span>
+        <span class="percentage-value-text" :style="'color: ' + textColor" v-if="type === 'text'">{{percentage}}</span>
         <i class="percentage-value-text" :class="panelIcon" v-else-if="type === 'icon'"></i>
-        <el-progress v-else type="circle" :stroke-width="height * 0.1" :width="height" :percentage="percentage" :color="circleColors"></el-progress>
+        <el-progress v-else type="circle" :stroke-width="height * 0.1" :width="height" :percentage="Number(percentage)" :color="circleColors"></el-progress>
       </p>
-      <p v-if="target" :class="position === 'center' ? 'text-align-c' : 'text-align-l'" :style="'font-size:' + 0.1 * height +'px'">{{target}}</p>
+      <p :class="position === 'center' ? 'text-align-c' : 'text-align-l'" :style="'font-size:' + 0.1 * height +'px'">
+        <span v-if="target && !endWithTarget">{{target}}</span>
+        <sapn v-if="endWithTarget" class="color-ffb463">{{endWithTarget}}</sapn>
+      </p>
     </el-card>
   </div>
 </template>
@@ -38,8 +41,8 @@ export default {
       default: 'This is a Title'
     },
     percentage: {
-      type: Number,
-      default: 50
+      type: String,
+      default: '50'
     },
     target: {
       type: String,
@@ -56,6 +59,14 @@ export default {
     tagIcon: {
       type: Boolean,
       default: false
+    },
+    textColor: {
+      type: String,
+      default: '#303133'
+    },
+    endWithTarget: {
+      type: String,
+      default: ''
     }
   },
 

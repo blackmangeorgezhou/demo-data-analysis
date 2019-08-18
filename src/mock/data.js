@@ -35,9 +35,9 @@ let data = {
         email: 'xiewenyu@xdf.cn',
         IsSuccess: true
       }
-    } else if (userName === 'Admin' && password === 'xdf_1234') {
+    } else if (userName === 'admin' && password === 'xdf_1234') {
       loginResult = {
-        userName: 'Admin',
+        userName: 'admin',
         email: 'admin@xdf.cn',
         IsSuccess: true
       }

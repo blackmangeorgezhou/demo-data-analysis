@@ -91,6 +91,11 @@ export default {
       default: () => {
         return ['#67c23a', '#409EFF']
       }
+    },
+
+    yMaxValue: {
+      type: Number,
+      default: 100
     }
   },
 
@@ -174,9 +179,15 @@ export default {
                 show: true,
                 position: this.xAxisDirection === 'horizontal' ? 'top' : 'right',
                 textStyle: {
-                  fontSize: 16
+                  fontSize: 14
                 },
-                formatter: '{c}%'
+                formatter: (params) => {
+                  if (params.name === '国际游学' && params.seriesIndex === 1) {
+                    return '247人'
+                  } else {
+                    return `${params.value}%`
+                  }
+                }
               }
             }
           }

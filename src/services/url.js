@@ -9,7 +9,7 @@ let URL = {
   getRateForContinueToHaveClasses: `${proLocalService}/getContinuationRate`,
   getClassRoomsCapacity: `${proLocalService}/GetClassRoomCapacity`,
   getUnionSignUp: `${proLocalService}/getAdditionalStuNum`,
-  getDepartmentTargetData: `http://10.124.14.91:8099/Home/getDate`
+  getDepartmentTargetData: `http://10.124.9.161:8529/Home/getDate`
 }
 
 export default URL
