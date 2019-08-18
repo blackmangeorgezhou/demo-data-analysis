@@ -53,7 +53,13 @@ router.beforeEach((to, from, next) => {
     store.replaceState(lecturePageData)
   }
 
-  next()
+  let isLogin = !!store.state.user
+  if (!isLogin) {
+    if (to.path.indexOf('/login') >= 0) next()
+    else next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

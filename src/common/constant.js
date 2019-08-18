@@ -40,7 +40,7 @@ let Constants = {
       label: '春季下'
     }
   ],
-  allSquarterValues: [1],
+  allSquarterValues: [3, 5],
   defaultDateValues: ['2019-01-01', '2019-12-31']
 }
 

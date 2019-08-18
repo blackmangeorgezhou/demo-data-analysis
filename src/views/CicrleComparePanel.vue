@@ -27,7 +27,7 @@ export default {
     },
     height: {
       type: Number,
-      default: 130
+      default: 140
     },
     bgColor: {
       type: String,

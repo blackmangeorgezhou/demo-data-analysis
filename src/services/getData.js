@@ -34,6 +34,11 @@ let API = {
   getUnionSignUp: async (data) => {
     const result = await get(URL.getUnionSignUp, data)
     return result
+  },
+
+  getDepartmentTargetData: async () => {
+    const result = await get(URL.getDepartmentTargetData, null)
+    return result
   }
 }
 

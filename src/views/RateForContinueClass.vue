@@ -61,7 +61,7 @@ export default {
     return {
       treeData: null,
       queryConditions: {
-        p_squarter: Constants.allSquarterValues,
+        p_squarter: [2],
         p_next_Squarter: Constants.allSquarterValues,
         date: Constants.defaultDateValues,
         nexDate: Constants.defaultDateValues

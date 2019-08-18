@@ -8,7 +8,8 @@ let URL = {
   getExpandSubjectStudentNum: `${proLocalService}/getExtensionDivision`,
   getRateForContinueToHaveClasses: `${proLocalService}/getContinuationRate`,
   getClassRoomsCapacity: `${proLocalService}/GetClassRoomCapacity`,
-  getUnionSignUp: `${proLocalService}/getAdditionalStuNum`
+  getUnionSignUp: `${proLocalService}/getAdditionalStuNum`,
+  getDepartmentTargetData: `http://10.124.14.91:8099/Home/getDate`
 }
 
 export default URL

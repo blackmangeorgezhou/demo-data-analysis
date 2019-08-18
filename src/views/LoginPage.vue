@@ -61,7 +61,7 @@ export default {
       loading: false,
       hasBottomLine: true,
       loginInfo: {
-        userName: 'chengxiang@xdf.cn',
+        userName: 'Admin',
         password: 'xdf_1234'
       },
       imgUrl: URL.getValidateCode,

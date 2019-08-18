@@ -124,7 +124,6 @@ export default {
     renderEchart () {
       let echartArea = this.$echarts.init(document.getElementById(this.elementId))
       const echartOptions = this.generateChartOptions()
-      console.log(echartOptions)
       echartArea.setOption(echartOptions)
     },
 
