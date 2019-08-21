@@ -11,7 +11,7 @@
       </p>
       <p :class="position === 'center' ? 'text-align-c' : 'text-align-l'" :style="'font-size:' + 0.1 * height +'px'">
         <span v-if="target && !endWithTarget">{{target}}</span>
-        <sapn v-if="endWithTarget" class="color-ffb463">{{endWithTarget}}</sapn>
+        <span v-if="endWithTarget" class="color-ffb463">{{endWithTarget}}</span>
       </p>
     </el-card>
   </div>
@@ -106,6 +106,7 @@ export default {
   computed: {
     panelStyle () {
       const parentW = this.height * 1.625
+      // const parentH = 160
       return `width: ${parentW}px; height: ${parentW}px;`
     },
 

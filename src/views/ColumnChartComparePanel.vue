@@ -109,7 +109,12 @@ export default {
         },
         {
           type: 'category',
-          data: []
+          data: [],
+          axisLabel: {
+            textStyle: {
+              fontSize: 15
+            }
+          }
         }
       ]
     }
@@ -182,10 +187,20 @@ export default {
                   fontSize: 14
                 },
                 formatter: (params) => {
-                  if (params.name === '国际游学' && params.seriesIndex === 1) {
-                    return '247人'
+                  if (params.seriesIndex === 0 && params.data < this.seriesDataList[1].data[params.dataIndex]) {
+                    return `{a|${params.value}%}`
                   } else {
-                    return `${params.value}%`
+                    if (params.name === '国际游学' && params.seriesIndex === 1) {
+                      return '247人'
+                    } else {
+                      return `${params.value}%`
+                    }
+                  }
+                },
+                rich: {
+                  a: {
+                    color: '#ff4949',
+                    fontSize: 20
                   }
                 }
               }

@@ -17,9 +17,16 @@ function generateUUID () {
   return uuidv1()
 }
 
+function fixedDecimalBits (value, numberBits = 2) {
+  const pointIndex = `${value}`.indexOf('.')
+  const fixedValue = `${value}`.substring(0, pointIndex + numberBits)
+  return Number(fixedValue) * 100
+}
+
 export default {
   formateNum,
   formatDate,
   formateTreeLabel,
-  generateUUID
+  generateUUID,
+  fixedDecimalBits
 }

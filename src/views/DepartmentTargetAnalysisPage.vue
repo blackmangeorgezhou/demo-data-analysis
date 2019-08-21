@@ -1,6 +1,6 @@
 <template>
   <div class="w-h-100">
-      <nav-bar @transferElementId="getNavBarId"
+    <nav-bar @transferElementId="getNavBarId"
     :canSelectTitle="false"
     :regionOptions="titleList"
     :bgColor="'#409EFF'"
@@ -14,7 +14,7 @@
             <circle-compare-panel v-for="subItem in item.subSalaryList" :key="subItem.title"
             :type="'progress'"
             :title="subItem.title"
-            :percentage="subItem.value"
+            :percentage="subItem.value + ''"
             :target="subItem.target"
             :textColor="subItem.textColor"></circle-compare-panel>
 
@@ -22,7 +22,7 @@
             <circle-compare-panel slot="reference"
             :type="'progress'"
             :title="item.title"
-            :percentage="item.value"
+            :percentage="item.value + ''"
             :target="item.target"
             :textColor="item.textColor"
             :endWithTarget="item.endWithTarget"></circle-compare-panel>
@@ -31,7 +31,7 @@
           <circle-compare-panel v-else
           :type="'progress'"
           :title="item.title"
-          :percentage="item.value"
+          :percentage="item.value + ''"
           :target="item.target"
           :textColor="item.textColor"
           :endWithTarget="item.endWithTarget"></circle-compare-panel>
@@ -51,7 +51,7 @@
           <circle-compare-panel v-for="item in textCompareList"
           :key="item.title"
           :title="item.title"
-          :percentage="item.value"
+          :percentage="item.title === '人工效益' ? item.value + '' : item.value"
           :target="item.target"
           :textColor="item.textColor"></circle-compare-panel>
         </div>
@@ -147,12 +147,14 @@ export default {
     async loaddata () {
       let response = await API.getDepartmentTargetData()
       if (response && response.resultCode === ResultCode.OK) {
-        this.mapPageData(response.data)
+        console.log('======> calculate')
+        console.log(this.calculatePageData(response.data))
+        console.log('======> calculate')
+        this.mapPageData(this.calculatePageData(response.data))
       }
     },
 
     async mapPageData (data) {
-      console.log(data)
       // 第一行：部门收入
       this.departmentSalaryList = [
         {
@@ -174,7 +176,7 @@ export default {
         },
         {
           title: '国外收入完成情况',
-          value: data.GW_IcomIncreRate || 0,
+          value: data.GW_IcomCopletRate || 0,
           target: '不低于12.1%',
           endWithTarget: '苏 州',
           subSalaryList: [
@@ -219,7 +221,7 @@ export default {
 
             {
               name: '目标值',
-              data: [33, 6.6, 12.1]
+              data: [33, 4, 12.1]
             }
           ],
           categories: ['优能人次', '国外人数', '国外收入']
@@ -229,7 +231,7 @@ export default {
             {
               name: '招生人数',
               data: [
-                data.GY_RecruitPersoNumCopletRate ? Number(data.GY_RecruitPersoNumCopletRate) : 0
+                data.GY_RecruitPersoNumCopletRate ? Formate.fixedDecimalBits(Number(data.GY_RecruitPersoNumCopletRate) / 247) : 0
               ]
             },
 
@@ -307,6 +309,23 @@ export default {
         ],
         categories: ['国外', '优能一对一', '优能', '泡泡']
       }]
+    },
+
+    calculatePageData (data) {
+      let newData = {}
+
+      const keys = Object.keys(data)
+      let keySet = new Set()
+      for (let key of keys) {
+        keySet.add(key.substring(0, key.lastIndexOf('_')))
+      }
+
+      const finalKeys = Array.from(keySet)
+      for (let fK of finalKeys) {
+        newData[fK] = data[fK + '_FM'] ? Formate.fixedDecimalBits(data[fK + '_FM'] / data[fK + '_FZ']) : 0
+      }
+
+      return newData
     },
 
     formateDisplayText (value) {
