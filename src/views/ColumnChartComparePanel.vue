@@ -1,6 +1,6 @@
 <template>
   <div :id="elementId" class="column-chart-compare-panel"
-  :style="{width: width +'px', height: height + 'px', margin: '0rem auto', padding: '0'}">
+  :style="{width: width +'px', height: height + 'px', margin: '0rem auto', padding: '0', margin: '0 16px 0 0'}">
 
   </div>
 </template>
@@ -182,7 +182,7 @@ export default {
             normal: {
               label: {
                 show: true,
-                position: this.xAxisDirection === 'horizontal' ? 'top' : 'right',
+                position: this.xAxisDirection === 'horizontal' ? 'top' : 'insideRight',
                 textStyle: {
                   fontSize: 14
                 },
@@ -200,7 +200,8 @@ export default {
                 rich: {
                   a: {
                     color: '#ff4949',
-                    fontSize: 20
+                    fontSize: 16,
+                    fontWeight: 'bold'
                   }
                 }
               }

@@ -47,19 +47,20 @@
       </div>
       <el-divider></el-divider>
       <div class="display-flex padding-b-48">
-        <div id="department-target-bottom-left" class="display-flex-wrap" style="width: 55%">
+        <div id="department-target-bottom-left" class="display-flex-wrap" style="width: 70%">
           <circle-compare-panel v-for="item in textCompareList"
+          :height="120"
           :key="item.title"
           :title="item.title"
           :percentage="item.title === '人工效益' ? item.value + '' : item.value"
           :target="item.target"
           :textColor="item.textColor"></circle-compare-panel>
         </div>
-        <div id="department-target-bottom-right" style="width: 45%; border-left: 1px solid #ccc">
+        <div id="department-target-bottom-right" style="width: 30%; border-left: 1px solid #ccc">
           <column-chart-compare-panel v-for="item in excellentTeacherChartData"
           :key="item.categories[0]"
-          :width="450"
-          :height="800"
+          :width="350"
+          :height="450"
           :xAxisDirection="'vertical'"
           :categoryList="item.categories"
           :seriesDataList="item.seriesDataList"></column-chart-compare-panel>
@@ -198,7 +199,10 @@ export default {
           seriesDataList: [
             {
               name: '续报率',
-              data: [(data.YN_SumerContinRate ? Number(data.YN_SumerContinRate) : 0), (data.YN_UNSumerContinRate ? Number(data.YN_UNSumerContinRate) : 0)]
+              data: [
+                data.YN_SumerContinRate ? Number(data.YN_SumerContinRate) : 0,
+                data.YN_UNSumerContinRate ? Number(data.YN_UNSumerContinRate) : 0
+              ]
             },
 
             {
@@ -213,9 +217,9 @@ export default {
             {
               name: '招生增长率',
               data: [
-                data.YN_RecruitPersoTimIncreRate ? Number(data.YN_RecruitPersoTimIncreRate) : 0,
-                data.GW_RecruitPersoNumIncreRate ? Number(data.GW_RecruitPersoNumIncreRate) : 0,
-                data.GW_IcomIncreRate ? Number(data.GW_IcomIncreRate) : 0
+                data.YN_RecruitPersoTimIncreRate ? Number(data.YN_RecruitPersoTimIncreRate) - 100 : 0,
+                data.GW_RecruitPersoNumIncreRate ? Number(data.GW_RecruitPersoNumIncreRate) - 100 : 0,
+                data.GW_IcomIncreRate ? Number(data.GW_IcomIncreRate) - 100 : 0
               ]
             },
 
@@ -231,7 +235,7 @@ export default {
             {
               name: '招生人数',
               data: [
-                data.GY_RecruitPersoNumCopletRate ? Formate.fixedDecimalBits(Number(data.GY_RecruitPersoNumCopletRate) / 247) : 0
+                data.GY_RecruitPersoNumCopletRate ? data.GY_RecruitPersoNumCopletRate : 0
               ]
             },
 
@@ -269,14 +273,14 @@ export default {
         {
           title: 'NPS值',
           // value: data.KF_NPS ? Number(data.KF_NPS) : 0,
-          value: this.formateDisplayText(data.KF_NPS),
+          value: this.formateDisplayText(data.KF_NPS / 100),
           target: '目标：不低于81.68%',
           textColor: this.mapTextColor('less', data.KF_NPS, 81.68)
         },
         {
           title: '人工效益',
           // value: data.RL_ArtificBnefit ? Number(data.RL_ArtificBnefit) : 0,
-          value: data.RL_ArtificBnefit || 0,
+          value: data.RL_ArtificBnefit / 100 || 0,
           target: '目标：不低于2.3',
           textColor: this.mapTextColor('less', data.RL_ArtificBnefit, 2.3)
         },
@@ -322,7 +326,7 @@ export default {
 
       const finalKeys = Array.from(keySet)
       for (let fK of finalKeys) {
-        newData[fK] = data[fK + '_FM'] ? Formate.fixedDecimalBits(data[fK + '_FM'] / data[fK + '_FZ']) : 0
+        newData[fK] = data[fK + '_FM'] ? Formate.fixedDecimalBits(data[fK + '_FZ'] / data[fK + '_FM'], 4) : 0
       }
 
       return newData

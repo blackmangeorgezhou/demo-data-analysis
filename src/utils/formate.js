@@ -18,9 +18,7 @@ function generateUUID () {
 }
 
 function fixedDecimalBits (value, numberBits = 2) {
-  const pointIndex = `${value}`.indexOf('.')
-  const fixedValue = `${value}`.substring(0, pointIndex + numberBits)
-  return Number(fixedValue) * 100
+  return (Number(value) * 100).toFixed(0)
 }
 
 export default {
