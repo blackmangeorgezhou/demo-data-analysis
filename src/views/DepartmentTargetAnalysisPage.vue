@@ -5,7 +5,7 @@
     :regionOptions="titleList"
     :bgColor="'#409EFF'"
     :rightType="'back'"></nav-bar>
-    <div :id="elementId">
+    <div :id="elementId" ref="snapshot-canvas-area">
       <div style="width: 1100px; margin: 0 auto">
         <div class="display-around">
         <div v-for="(item, index) in departmentSalaryList" :key="index">
@@ -42,7 +42,6 @@
         <column-chart-compare-panel v-for="item in columnChartList"
         :key="item.categories[0]"
         :categoryList="item.categories"
-        :width="item.seriesDataList[0].name === '招生人数' ? 300 : 350"
         :seriesDataList="item.seriesDataList"></column-chart-compare-panel>
       </div>
       <el-divider></el-divider>
@@ -52,14 +51,14 @@
           :height="120"
           :key="item.title"
           :title="item.title"
-          :percentage="item.title === '人工效益' ? item.value + '' : item.value"
+          :percentage="(item.title === '人工效益' || item.title === 'NPS值') ? item.value + '' : item.value"
           :target="item.target"
           :textColor="item.textColor"></circle-compare-panel>
         </div>
         <div id="department-target-bottom-right" style="width: 30%; border-left: 1px solid #ccc">
           <column-chart-compare-panel v-for="item in excellentTeacherChartData"
           :key="item.categories[0]"
-          :width="350"
+          :width="320"
           :height="450"
           :xAxisDirection="'vertical'"
           :categoryList="item.categories"
@@ -68,6 +67,7 @@
       </div>
       </div>
     </div>
+    <el-button @click="generateSnapShot" class="btn_snapShot" icon="el-icon-picture-outline" type="warning" circle title="生成快照"></el-button>
    </div>
 </template>
 
@@ -79,6 +79,9 @@ import ColumnChartComparePanel from './ColumnChartComparePanel'
 import { Formate } from '@/utils'
 import { API } from '@/services'
 import { ResultCode } from '@/common'
+import html2canvas from 'html2canvas'
+import canvg from 'canvg'
+
 export default {
   name: 'DepartmentTargetAnalysisPage',
 
@@ -115,19 +118,6 @@ export default {
     let centerContentEle = document.getElementById(this.elementId)
     centerContentEle.style.height = `${wH - navHeight}px`
     centerContentEle.style.overflow = 'auto'
-
-    // const limitWidth = 1400
-    // window.onresize = () => {
-    //   let departmentTargetBottomLeftEle = document.getElementById('department-target-bottom-left')
-    //   let departmentTargetBottomRightEle = document.getElementById('department-target-bottom-right')
-    //   if (document.documentElement.clientWidth > limitWidth) {
-    //     departmentTargetBottomLeftEle.style.width = '50%'
-    //     departmentTargetBottomRightEle.style.width = '50%'
-    //   } else {
-    //     departmentTargetBottomLeftEle.style.width = '65%'
-    //     departmentTargetBottomRightEle.style.width = '35%'
-    //   }
-    // }
   },
 
   async created () {
@@ -160,34 +150,34 @@ export default {
       this.departmentSalaryList = [
         {
           title: '泡泡收入完成情况',
-          value: data.PP_IcomCopletRate || 0,
+          value: data.PP_IcomCopletRate ? Number(data.PP_IcomCopletRate).toFixed(0).toString() : 0,
           target: '不低于95%',
           textColor: this.mapTextColor(data.PP_IcomCopletRate, 95)
         },
         {
           title: '优能收入完成情况',
-          value: data.YN_IcomCopletRate || 0,
+          value: data.YN_IcomCopletRate ? Number(data.YN_IcomCopletRate).toFixed(0).toString() : 0,
           target: '不低于95%'
         },
         {
           title: '一对一收入完成情况',
-          value: data.YDY_IcomCopletRate || 0,
+          value: data.YDY_IcomCopletRate ? Number(data.YDY_IcomCopletRate).toFixed(0).toString() : 0,
           target: '不低于24%',
           endWithTarget: '苏 州'
         },
         {
           title: '国外收入完成情况',
-          value: data.GW_IcomCopletRate || 0,
+          value: data.GW_IcomCopletRate ? Number(data.GW_IcomCopletRate).toFixed(0).toString() : 0,
           target: '不低于12.1%',
           endWithTarget: '苏 州',
           subSalaryList: [
             {
               title: 'VIP收入完成情况',
-              value: Number(data.GW_IcomCopletRateVIP) || 0
+              value: Number(data.GW_IcomCopletRateVIP) ? Number(data.GW_IcomCopletRateVIP).toFixed(0).toString() : 0
             },
             {
               title: '大班收入完成情况',
-              value: Number(data.GW_IcomCopletRateDB) || 0
+              value: Number(data.GW_IcomCopletRateDB) ? Number(data.GW_IcomCopletRateDB).toFixed(0).toString() : 0
             }
           ]
         }
@@ -200,8 +190,8 @@ export default {
             {
               name: '续报率',
               data: [
-                data.YN_SumerContinRate ? Number(data.YN_SumerContinRate) : 0,
-                data.YN_UNSumerContinRate ? Number(data.YN_UNSumerContinRate) : 0
+                data.YN_SumerContinRate ? Number(data.YN_SumerContinRate).toFixed(0).toString() : 0,
+                data.YN_UNSumerContinRate ? Number(data.YN_UNSumerContinRate).toFixed(0).toString() : 0
               ]
             },
 
@@ -217,9 +207,9 @@ export default {
             {
               name: '招生增长率',
               data: [
-                data.YN_RecruitPersoTimIncreRate ? Number(data.YN_RecruitPersoTimIncreRate) - 100 : 0,
-                data.GW_RecruitPersoNumIncreRate ? Number(data.GW_RecruitPersoNumIncreRate) - 100 : 0,
-                data.GW_IcomIncreRate ? Number(data.GW_IcomIncreRate) - 100 : 0
+                data.YN_RecruitPersoTimIncreRate ? (Number(data.YN_RecruitPersoTimIncreRate) - 100).toFixed(0) : 0,
+                data.GW_RecruitPersoNumIncreRate ? (Number(data.GW_RecruitPersoNumIncreRate) - 100).toFixed(0) : 0,
+                data.GW_IcomIncreRate ? (Number(data.GW_IcomIncreRate) - 100).toFixed(0) : 0
               ]
             },
 
@@ -235,7 +225,7 @@ export default {
             {
               name: '招生人数',
               data: [
-                data.GY_RecruitPersoNumCopletRate ? data.GY_RecruitPersoNumCopletRate : 0
+                data.GY_RecruitPersoNumCopletRate ? Number(data.GY_RecruitPersoNumCopletRate).toFixed(0) : 0
               ]
             },
 
@@ -252,42 +242,36 @@ export default {
       this.textCompareList = [
         {
           title: '泡泡初级教师占比',
-          // value: data.PP_PrimarTechRatio ? Number(data.PP_PrimarTechRatio) : 0,
-          value: this.formateDisplayText(data.PP_PrimarTechRatio),
+          value: this.formateDisplayText(data.PP_PrimarTechRatio ? Number(data.PP_PrimarTechRatio).toFixed(0) : 0),
           target: '目标：不高于38%',
           textColor: this.mapTextColor('Greater', data.PP_PrimarTechRatio, 38)
         },
         {
           title: '泡泡小低春季占比',
-          // value: data.PP_PrimarSprNormReadingHeadRatio ? Number(data.PP_PrimarSprNormReadingHeadRatio) : 0,
           value: '— —',
           target: '目标：不低于24%'
         },
         {
           title: '国外教师功底',
-          // value: data.GW_TechSkilCompliaRate ? Number(data.GW_TechSkilCompliaRate) : 0,
-          value: this.formateDisplayText(data.GW_TechSkilCompliaRate),
+          value: this.formateDisplayText(data.GW_TechSkilCompliaRate ? Number(data.GW_TechSkilCompliaRate).toFixed(0) : 0),
           target: '目标：不低于80%',
           textColor: this.mapTextColor('less', data.GW_TechSkilCompliaRate, 80)
         },
         {
           title: 'NPS值',
-          // value: data.KF_NPS ? Number(data.KF_NPS) : 0,
-          value: this.formateDisplayText(data.KF_NPS / 100),
+          value: data.KF_NPS.toString(),
           target: '目标：不低于81.68%',
           textColor: this.mapTextColor('less', data.KF_NPS, 81.68)
         },
         {
           title: '人工效益',
-          // value: data.RL_ArtificBnefit ? Number(data.RL_ArtificBnefit) : 0,
-          value: data.RL_ArtificBnefit / 100 || 0,
+          value: (data.RL_ArtificBnefit / 100).toFixed(2).toString() || '0',
           target: '目标：不低于2.3',
-          textColor: this.mapTextColor('less', data.RL_ArtificBnefit, 2.3)
+          textColor: this.mapTextColor('less', data.RL_ArtificBnefit / 100, 2.3)
         },
         {
           title: '司龄3到12月教师离职率',
-          // value: data.RL_NewTechDimisRate ? Number(data.RL_NewTechDimisRate) : 0,
-          value: this.formateDisplayText(data.RL_NewTechDimisRate),
+          value: this.formateDisplayText(data.RL_NewTechDimisRate ? Number(data.RL_NewTechDimisRate).toFixed(0) : 0),
           target: '目标：不高于35%',
           textColor: this.mapTextColor('Greater', data.RL_NewTechDimisRate, 35)
         }
@@ -299,10 +283,10 @@ export default {
           {
             name: '优秀老师占比',
             data: [
-              data.RL_GWExclletQualificRatio ? Number(data.RL_GWExclletQualificRatio) : 0,
-              data.RL_YDYExclletQualificRatio ? Number(data.RL_YDYExclletQualificRatio) : 0,
-              data.RL_YNExclletQualificRatio ? Number(data.RL_YNExclletQualificRatio) : 0,
-              data.RL_PPExclletQualificRatio ? Number(data.RL_PPExclletQualificRatio) : 0
+              data.RL_GWExclletQualificRatio ? Number(data.RL_GWExclletQualificRatio).toFixed(0) : 0,
+              data.RL_YDYExclletQualificRatio ? Number(data.RL_YDYExclletQualificRatio).toFixed(0) : 0,
+              data.RL_YNExclletQualificRatio ? Number(data.RL_YNExclletQualificRatio).toFixed(0) : 0,
+              data.RL_PPExclletQualificRatio ? Number(data.RL_PPExclletQualificRatio).toFixed(0) : 0
             ]
           },
 
@@ -343,6 +327,80 @@ export default {
       } else {
         return value < target ? '#ff4949' : displayColor
       }
+    },
+
+    // 生成快照图片并下载.
+    generateSnapShot () {
+      const scale = 2
+
+      let snapShotCanvas = this.$refs['snapshot-canvas-area']
+      const originalHeight = snapShotCanvas.clientHeight
+      snapShotCanvas.style.height = 'auto'
+      snapShotCanvas.style.overflow = 'visible'
+      const width = snapShotCanvas.clientWidth
+      const height = snapShotCanvas.clientHeight
+
+      const options = {
+        scale,
+        canvas: snapShotCanvas,
+        width,
+        height,
+        useCORS: true
+      }
+
+      // 对svg的处理
+      let nodesToRecover = []
+      let nodesToRemove = []
+      let svgEles = document.querySelectorAll(`#${this.elementId} svg`)
+
+      svgEles.forEach((node, index) => {
+        let parentNode = node.parentNode
+        let svg = node.innerHTML
+        let childCanvas = document.createElement('canvas')
+        canvg(childCanvas, svg)
+        if (node.style.position) {
+          childCanvas.style.position += node.style.position
+          childCanvas.style.left += node.style.left
+          childCanvas.style.top += node.style.top
+          childCanvas.style.width = node.clientWidth
+          childCanvas.style.height = node.clientHeight
+        }
+
+        nodesToRecover.push({
+          parent: parentNode,
+          child: node
+        })
+
+        parentNode.removeChild(node)
+
+        nodesToRemove.push({
+          parent: parentNode,
+          child: node
+        })
+
+        parentNode.appendChild(childCanvas)
+      })
+
+      const self = this
+      setTimeout(() => {
+        html2canvas(snapShotCanvas, options).then((canvas) => {
+          const imgURL = canvas.toDataURL('image/jpeg')
+          self.downloadImg(imgURL)
+          snapShotCanvas.style.height = `${originalHeight}px`
+          snapShotCanvas.style.overflow = 'auto'
+        })
+      }, 0)
+    },
+
+    downloadImg (imgURL) {
+      let aLink = document.createElement('a')
+      aLink.href = imgURL
+      aLink.download = '校长看板.png'
+      aLink.style.display = 'none'
+
+      document.body.appendChild(aLink)
+      aLink.click()
+      document.body.removeChild(aLink)
     }
   }
 }
@@ -352,5 +410,11 @@ export default {
 .fixed-width {
   width: 1100px;
   margin: 0 atuo
+}
+
+.btn_snapShot {
+  position: absolute;
+  top: 5rem;
+  right: 2rem
 }
 </style>

@@ -112,7 +112,8 @@ export default {
           data: [],
           axisLabel: {
             textStyle: {
-              fontSize: 15
+              fontSize: 15,
+              color: '#303133'
             }
           }
         }

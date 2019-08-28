@@ -18,7 +18,7 @@ function generateUUID () {
 }
 
 function fixedDecimalBits (value, numberBits = 2) {
-  return (Number(value) * 100).toFixed(0)
+  return (Number(value) * 100).toFixed(2)
 }
 
 export default {
