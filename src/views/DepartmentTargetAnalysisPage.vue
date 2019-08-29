@@ -355,7 +355,7 @@ export default {
 
       svgEles.forEach((node, index) => {
         let parentNode = node.parentNode
-        let svg = node.innerHTML
+        let svg = node.outerHTML
         let childCanvas = document.createElement('canvas')
         canvg(childCanvas, svg)
         if (node.style.position) {
