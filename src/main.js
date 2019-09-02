@@ -11,6 +11,7 @@ import Vue2OrgTree from 'vue2-org-tree'
 import { DialogAlert } from '@/common'
 // mock：登录
 import '@/mock'
+import 'babel-polyfill'
 
 Vue.use(VueResource)
 Vue.use(Vue2OrgTree)

@@ -37,7 +37,7 @@ export default {
         },
         {
           path: '/demo-data-analysis/department-target',
-          title: '部门指标汇总分析',
+          title: '学校绩效考核指标分析',
           icon: 'el-icon-data-analysis'
         }
       ],

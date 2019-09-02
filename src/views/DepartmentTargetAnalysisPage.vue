@@ -100,8 +100,8 @@ export default {
 
       titleList: [
         {
-          label: '部门指标汇总分析',
-          value: '部门指标汇总分析'
+          label: '学校绩效考核指标分析',
+          value: '学校绩效考核指标分析'
         }
       ],
 
