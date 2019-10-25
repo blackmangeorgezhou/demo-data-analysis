@@ -1,7 +1,7 @@
 <template>
   <div id="data-loading-spinner">
     <i class="el-icon-loading icon-loading"></i>
-    <!-- <p>加载中...</p> -->
+    <p style="font-size: .5rem">努力加载中...</p>
   </div>
 </template>
 
@@ -32,6 +32,6 @@ export default {
 }
 
 .icon-loading {
-  font-size: 4rem;
+  font-size: 2rem;
 }
 </style>

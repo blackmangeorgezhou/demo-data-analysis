@@ -15,7 +15,7 @@ import 'babel-polyfill'
 
 Vue.use(VueResource)
 Vue.use(Vue2OrgTree)
-Vue.use(ElementUI)
+Vue.use(ElementUI, { size: 'small' })
 Vue.use(DialogAlert)
 
 Vue.config.productionTip = false

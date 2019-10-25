@@ -67,7 +67,7 @@
       </div>
       </div>
     </div>
-    <el-button @click="generateSnapShot" class="btn_snapShot" icon="el-icon-picture-outline" type="warning" circle title="生成快照"></el-button>
+    <el-button @click="generateSnapShot" class="btn_snapShot" icon="el-icon-picture-outline" type="warning" title="生成快照">生成快照</el-button>
    </div>
 </template>
 

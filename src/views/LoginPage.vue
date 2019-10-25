@@ -130,7 +130,8 @@ export default {
   background-color: rgb();
   background-size: 15% 15%;
   overflow-y: hidden;
-  background-color: rgb(58,164,167, .5);
+  /* background-color: rgb(58,164,167, .5); */
+  background-color: #3AA4A7
 }
 
 #login-page #header {
