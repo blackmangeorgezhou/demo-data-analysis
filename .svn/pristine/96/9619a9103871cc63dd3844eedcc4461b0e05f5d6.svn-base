@@ -13,8 +13,7 @@ import { storeLocalStorage } from '@/utils'
 Vue.use(Router)
 
 let router = new Router({
-  mode: 'history',
-  // base: '/demo-data-analysis/',
+  base: '/demo-data-analysis/',
   routes: [
     {
       path: '',
