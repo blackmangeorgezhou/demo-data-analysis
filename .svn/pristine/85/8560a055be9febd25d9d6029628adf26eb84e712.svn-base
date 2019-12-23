@@ -1,0 +1,119 @@
+<template>
+    <div>
+    <el-table
+    :data="tableData"
+    border
+    style="width: 100%">
+    <el-table-column prop="AreaInsideOfficalSchool" label="区域">
+    </el-table-column>
+    <el-table-column prop="ChildrenStudyNum" label="少儿在读人头数">
+    </el-table-column>
+    <el-table-column prop="ChildrenOfficalStudNum" label="少儿公校本年在读人头数">
+    </el-table-column>
+    <el-table-column prop="ChildrenBusinessRate" label="少儿业务市占率">
+    </el-table-column>
+    <el-table-column prop="SecondaryStudyNum" label="中学班级在读人头数">
+    </el-table-column>
+    <el-table-column prop="SecondaryOfficalStudyNum" label="中学班级公校本年在读人头数">
+    </el-table-column>
+    <el-table-column prop="SecondaryBusinessRate" label="中学班级业务市占率">
+    </el-table-column><el-table-column prop="CoveredArea" label="建筑面积">
+    </el-table-column>
+  </el-table>
+    </div>
+</template>
+<script>
+export default {
+    data(){
+        return {
+            tableData:[
+                {
+                    AreaInsideOfficalSchool:"吴中区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },
+                {
+                    AreaInsideOfficalSchool:"姑苏区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },
+                {
+                    AreaInsideOfficalSchool:"园区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },
+                {
+                    AreaInsideOfficalSchool:"新区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },{
+                    AreaInsideOfficalSchool:"吴江区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },{
+                    AreaInsideOfficalSchool:"相城区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },{
+                    AreaInsideOfficalSchool:"常熟区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },{
+                    AreaInsideOfficalSchool:"昆山区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                },{
+                    AreaInsideOfficalSchool:"张家港区",
+                    ChildrenStudyNum:"3005",
+                    ChildrenOfficalStudNum:"23184",
+                    ChildrenBusinessRate:"12.96%",
+                    SecondaryStudyNum:"3327",
+                    SecondaryOfficalStudyNum:"22677",
+                    SecondaryBusinessRate:"14.67%",
+                    CoveredArea:"4626.69"
+                }
+            ]
+        }
+    }
+}
+</script>

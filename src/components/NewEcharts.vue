@@ -1,0 +1,162 @@
+<template>
+  <div>
+    <div class="name-title">{{titleName}}</div>
+    <div :id="echarts" :style="{height:CanvasHeight}" ref="echarts"></div>
+  </div>
+</template>
+ 
+<script>
+import echarts from "echarts";
+import theme from "@/assets/js/theme2";
+export default {
+  name: "echartscom",
+  props: {
+    isShow:{
+      default:false
+    },
+    titleName:{
+      default:'xx图表数据'
+    },
+    echarts: {
+      default: "echarts",
+      type: String
+    },
+    DataList: {
+      default: () => {
+        return {};
+      },
+      type: Object
+    },
+    CanvasHeight: {
+      default: "275px"
+    },
+    CanvasWidth: {
+      default: "500px"
+    },
+    type: {
+      default: "bar",
+      type: String
+    },
+    isTranslated: {
+      default: false,
+      type: Boolean
+    },
+    isSetDataZoom: {
+      default: false,
+      type: Boolean
+    },
+    isTwoyaxis: {
+      default: false,
+      type: Boolean
+    },
+    isPercent:{
+      default:false,
+      type:Boolean
+    }
+  },
+  data() {
+    return {
+      isPieType: false,
+      xAxis: [
+        {
+          type: "category",
+          axisPointer: {
+            type: "shadow"
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#ffffff"
+            }
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: "value",
+          axisLabel: {
+            formatter:this.isPercent ? "{value}%" : "{value}"
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#ffffff"
+            }
+          }
+        }
+      ],
+      twoYaxis: {
+        type: "value",
+        axisLabel: {
+          formatter: "{value} %"
+        }
+      },
+      dataZoom: [
+        {
+          type: "slider",
+          xAxisIndex: 0,
+          filterMode: "empty",
+          start: 0,
+          x: "0",
+          end: 30,
+          handleStyle: {
+            color: "#519cff",
+            backgroundColor: "#519cff"
+          },
+          textStyle: {
+            color: "#000"
+          },
+          borderColor: "#519cff"
+        }
+      ]
+    };
+  },
+  watch:{
+    isShow(val){
+      console.log(val,'val')
+      if(val){
+        this.drawCharts();
+      }
+    }
+  },
+  mounted() {
+    if (this.isTwoyaxis) {
+      this.yAxis.push(this.twoYaxis);
+    }
+    if (this.type == "pie") {
+      this.isPieType = true;
+    }
+  },
+  methods: {
+    drawCharts() {
+      this.xAxis[0].data=this.DataList.XlaixName;
+      var myChart = echarts.init(document.getElementById(this.echarts), theme);
+      var option = {
+        tooltip: {
+          trigger: this.isPieType ? "item" : "axis",
+          axisPointer: {
+            type: "cross",
+            crossStyle: {
+              color: "#999"
+            }
+          }
+        },
+        legend: this.isPieType ? { orient: "vertical", left: "left",textStyle:{color: '#ffffff'}} : {textStyle:{color: '#ffffff'}},
+        xAxis: this.isPieType
+          ? ""
+          : this.isTranslated
+          ? this.yAxis
+          : this.xAxis,
+        yAxis: this.isPieType
+          ? ""
+          : this.isTranslated
+          ? this.xAxis
+          : this.yAxis,
+        series: this.isPieType
+          ? [{ type: "pie", data: this.DataList.YlaixData, radius: "50%" }]
+          : this.DataList.YlaixData,
+        dataZoom: this.isSetDataZoom ? this.dataZoom : ""
+      };
+      myChart.setOption(option);
+    }
+  }
+};
+</script>
