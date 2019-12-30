@@ -41,7 +41,7 @@ export default {
           icon: 'el-icon-data-analysis'
         },
         {
-          path: '/demo-data-analysis/school-salary',
+          path: '/demo-data-analysis/school-salary/index',
           title: '学校经营数据分析',
           bgColor: '#040f3c',
           icon: 'el-icon-s-marketing'

@@ -97,8 +97,7 @@ export default {
         this.loading = false
         if (response && response.resultCode === ResultCode.OK && response.data && response.data.IsSuccess) {
           this.setUser(response.data)
-          // this.$router.push('/demo-data-analysis/home')
-          this.$router.push("/demo-data-analysis/school-salary/index")
+          this.$router.push('/demo-data-analysis/home')
         } else {
           this.showError(response.data.Msg)
         }
